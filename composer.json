@@ -1,0 +1,52 @@
+{
+  "name": "valesaude/laravel-health-check",
+  "description": "Laravel application health check utilities.",
+  "type": "library",
+  "autoload": {
+    "psr-4": {
+      "ValeSaude\\LaravelHealthCheck\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "ValeSaude\\LaravelHealthCheck\\Tests\\": "tests"
+    }
+  },
+  "authors": [
+    {
+      "name": "Vale Saúde",
+      "email": "ti@tivalesaudesempre.com.br"
+    }
+  ],
+  "require": {
+    "php": "^7.3 || ^7.4 || ^8.0",
+    "illuminate/support": "5.5.*",
+    "illuminate/contracts": "5.5.*"
+  },
+  "require-dev": {
+    "phpstan/phpstan": "^1.9",
+    "phpunit/phpunit": "~6.0",
+    "mockery/mockery": "~1.0",
+    "orchestra/testbench": "^3.5",
+    "phpstan/extension-installer": "^1.2",
+    "phpstan/phpstan-deprecation-rules": "^1.0"
+  },
+  "config": {
+    "allow-plugins": {
+      "phpstan/extension-installer": true,
+      "kylekatarnls/update-helper": true
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "ValeSaude\\LaravelHealthCheck\\LaravelHealthCheckServiceProvider"
+      ]
+    }
+  },
+  "scripts": {
+    "analyse": "phpstan analyze",
+    "test": "phpunit",
+    "test:coverage": "phpunit --coverage-text"
+  }
+}
