@@ -18,15 +18,22 @@ class ResultSet
         $this->results = $results;
     }
 
+    /**
+     * @phpstan-return ResultArray
+     */
+    public function getUnhealthyResults(): array
+    {
+        return array_filter(
+            $this->results,
+            static function (Result $result) {
+                return !$result->isHealthy();
+            }
+        );
+    }
+
     public function isHealthy(): bool
     {
-        foreach ($this->results as $result) {
-            if (!$result->isHealthy()) {
-                return false;
-            }
-        }
-
-        return true;
+        return empty($this->getUnhealthyResults());
     }
 
     /**

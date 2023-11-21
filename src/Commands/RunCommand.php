@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Arr;
 use Symfony\Component\Console\Input\InputOption;
 use ValeSaude\LaravelHealthCheck\Config\ProfileConfig;
+use ValeSaude\LaravelHealthCheck\Events\UnhealthyApplicationComponentsEvent;
 use ValeSaude\LaravelHealthCheck\Runner;
 
 class RunCommand extends Command
@@ -21,7 +22,13 @@ class RunCommand extends Command
 
         $resultSet = $runner->run(...$profiles);
 
-        return $resultSet->isHealthy() ? 0 : 1;
+        if (!$resultSet->isHealthy()) {
+            event(new UnhealthyApplicationComponentsEvent($resultSet));
+
+            return 1;
+        }
+
+        return 0;
     }
 
     /**

@@ -2,6 +2,8 @@
 
 namespace ValeSaude\LaravelHealthCheck\Tests\Commands;
 
+use Illuminate\Support\Facades\Event;
+use ValeSaude\LaravelHealthCheck\Events\UnhealthyApplicationComponentsEvent;
 use ValeSaude\LaravelHealthCheck\Tests\Dummies\HealthyValidatorDummy;
 use ValeSaude\LaravelHealthCheck\Tests\Dummies\UnhealthyValidatorDummy;
 use ValeSaude\LaravelHealthCheck\Tests\TestCase;
@@ -29,10 +31,22 @@ class RunCommandTest extends TestCase
 
     public function test_it_runs_all_profiles_when_profile_option_is_not_passed(): void
     {
+        // Given
+        Event::fake([UnhealthyApplicationComponentsEvent::class]);
+
         // When
         $exitCode = $this->artisan('health-check:run');
 
         // Then
         $this->assertEquals(1, $exitCode);
+        Event::assertDispatched(
+            UnhealthyApplicationComponentsEvent::class,
+            function (UnhealthyApplicationComponentsEvent $event) {
+                $unhealthyResults = $event->getResultSet()->getUnhealthyResults();
+
+                return 1 === count($unhealthyResults) &&
+                    isset($unhealthyResults[UnhealthyValidatorDummy::class]);
+            }
+        );
     }
 }
