@@ -28,4 +28,9 @@ class DatabaseQueueConfig extends AbstractValidatorConfig
 
         return $queueSpecificMaxExecutionTime ?? $this->getSettings('global_max_execution_time', 60);
     }
+
+    public function getStuckJobThreshold(): int
+    {
+        return $this->getSettings('stuck_job_threshold', 10);
+    }
 }

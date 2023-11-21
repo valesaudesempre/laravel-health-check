@@ -9,6 +9,7 @@ return [
             'table_name' => 'queues',
             'max_size' => 50,
             'global_max_execution_time' => 60,
+            'stuck_job_threshold' => 10,
         ],
     ],
 ];
