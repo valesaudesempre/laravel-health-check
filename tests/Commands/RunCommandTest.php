@@ -22,8 +22,11 @@ class RunCommandTest extends TestCase
 
     public function test_it_runs_only_a_specific_profile_when_profile_option_is_passed(): void
     {
+        // Given
+        $pendingCommand = $this->artisan('health-check:run', ['--profile' => 'profile-1']);
+
         // When
-        $exitCode = $this->artisan('health-check:run', ['--profile' => 'profile-1']);
+        $exitCode = $pendingCommand->execute();
 
         // Then
         $this->assertEquals(0, $exitCode);
@@ -33,9 +36,10 @@ class RunCommandTest extends TestCase
     {
         // Given
         Event::fake([UnhealthyApplicationComponentsEvent::class]);
+        $pendingCommand = $this->artisan('health-check:run');
 
         // When
-        $exitCode = $this->artisan('health-check:run');
+        $exitCode = $pendingCommand->execute();
 
         // Then
         $this->assertEquals(1, $exitCode);
