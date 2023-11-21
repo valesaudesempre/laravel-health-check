@@ -4,6 +4,7 @@ namespace ValeSaude\LaravelHealthCheck;
 
 use Illuminate\Contracts\Container\Container;
 use ValeSaude\LaravelHealthCheck\Config\ProfileConfig;
+use ValeSaude\LaravelHealthCheck\Contracts\ValidatorInterface;
 
 class Runner
 {
@@ -26,7 +27,10 @@ class Runner
             $validators = $this->config->getValidatorsForProfile($profile);
 
             foreach ($validators as $validator) {
-                $results[$validator] = $this->container->call([$validator, 'validate']);
+                /** @var ValidatorInterface $instance */
+                $instance = $this->container->make($validator);
+
+                $results[$validator] = $instance->validate();
             }
         }
 
