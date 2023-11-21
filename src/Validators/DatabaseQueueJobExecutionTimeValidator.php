@@ -10,7 +10,7 @@ use ValeSaude\LaravelHealthCheck\Contracts\ValidatorInterface;
 use ValeSaude\LaravelHealthCheck\Result;
 
 /**
- * @phpstan-type DatabaseQueueJob object{id: int, queue: string, payload: string, reserved_at: int, available_at: int}
+ * @phpstan-type RunningDatabaseJob object{id: int, queue: string, payload: string, reserved_at: int, available_at: int}
  */
 class DatabaseQueueJobExecutionTimeValidator implements ValidatorInterface
 {
@@ -27,7 +27,7 @@ class DatabaseQueueJobExecutionTimeValidator implements ValidatorInterface
         $jobs = $this->listAllRunningJobs();
         $queueMaxExecutionTime = [];
 
-        /** @var DatabaseQueueJob $job */
+        /** @var RunningDatabaseJob $job */
         foreach ($jobs as $job) {
             if (!isset($queueMaxExecutionTime[$job->queue])) {
                 $queueMaxExecutionTime[$job->queue] = $this->config->getMaxExecutionTimeForQueue($job->queue);
@@ -55,7 +55,7 @@ class DatabaseQueueJobExecutionTimeValidator implements ValidatorInterface
     }
 
     /**
-     * @return Collection<DatabaseQueueJob>
+     * @return Collection<RunningDatabaseJob>
      */
     private function listAllRunningJobs(): Collection
     {
@@ -63,6 +63,7 @@ class DatabaseQueueJobExecutionTimeValidator implements ValidatorInterface
             ->getConnection()
             ->table($this->config->getTableName())
             ->select(['id', 'queue', 'reserved_at', 'available_at', 'payload'])
+            ->whereNotNull('reserved_at')
             ->get();
     }
 }
