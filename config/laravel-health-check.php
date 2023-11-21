@@ -9,7 +9,7 @@ return [
     'settings' => [
         DatabaseQueueConfig::class => [
             'connection_name' => 'default',
-            'table_name' => 'queues',
+            'table_name' => 'jobs',
             'max_size' => 50,
             'global_max_execution_time' => 60,
             'stuck_job_threshold' => 10,
