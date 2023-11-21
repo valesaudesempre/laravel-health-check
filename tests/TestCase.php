@@ -4,6 +4,7 @@ namespace ValeSaude\LaravelHealthCheck\Tests;
 
 use Illuminate\Support\Facades\Schema;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
+use ValeSaude\LaravelHealthCheck\LaravelHealthCheckServiceProvider;
 
 class TestCase extends OrchestraTestCase
 {
@@ -36,5 +37,12 @@ class TestCase extends OrchestraTestCase
     protected function teardownQueueTables(): void
     {
         Schema::connection('testbench')->dropIfExists('queues');
+    }
+
+    protected function getPackageProviders($app): array
+    {
+        return [
+            LaravelHealthCheckServiceProvider::class,
+        ];
     }
 }

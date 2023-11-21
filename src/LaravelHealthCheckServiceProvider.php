@@ -12,6 +12,10 @@ class LaravelHealthCheckServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->mergeConfigFrom(__DIR__.'/../config/laravel-health-check.php', 'laravel-health-check');
+
+        $this->commands([
+            Commands\RunCommand::class,
+        ]);
     }
 
     public function boot(): void
