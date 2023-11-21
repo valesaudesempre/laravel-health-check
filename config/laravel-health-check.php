@@ -1,13 +1,14 @@
 <?php
 
-use ValeSaude\LaravelHealthCheck\Validators\DatabaseQueueSizeValidator;
+use ValeSaude\LaravelHealthCheck\Config\DatabaseQueueConfig;
 
 return [
     'settings' => [
-        DatabaseQueueSizeValidator::class => [
-            'max_size' => 50,
+        DatabaseQueueConfig::class => [
             'connection_name' => 'default',
             'table_name' => 'queues',
+            'max_size' => 50,
+            'global_max_execution_time' => 60,
         ],
     ],
 ];

@@ -3,4 +3,9 @@ parameters:
 		-
 			message: "#^Call to an undefined static method Illuminate\\\\Support\\\\Facades\\\\DB\\:\\:connection\\(\\)\\.$#"
 			count: 1
+			path: src/Validators/DatabaseQueueJobExecutionTimeValidator.php
+
+		-
+			message: "#^Call to an undefined static method Illuminate\\\\Support\\\\Facades\\\\DB\\:\\:connection\\(\\)\\.$#"
+			count: 1
 			path: src/Validators/DatabaseQueueSizeValidator.php

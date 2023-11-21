@@ -2,17 +2,26 @@
 
 namespace ValeSaude\LaravelHealthCheck;
 
+/**
+ * @phpstan-type Metadata array<string, mixed>
+ */
 class Result
 {
     /** @var bool */
     private $healthy;
     /** @var string|null */
     private $message;
+    /** @var Metadata */
+    private $metadata;
 
-    public function __construct(bool $healthy, ?string $message = null)
+    /**
+     * @phpstan-param Metadata $metadata
+     */
+    public function __construct(bool $healthy, ?string $message = null, array $metadata = [])
     {
         $this->healthy = $healthy;
         $this->message = $message;
+        $this->metadata = $metadata;
     }
 
     public function isHealthy(): bool
@@ -25,13 +34,24 @@ class Result
         return $this->message;
     }
 
+    /**
+     * @phpstan-return Metadata
+     */
+    public function getMetadata(): array
+    {
+        return $this->metadata;
+    }
+
     public static function healthy(): Result
     {
         return new self(true);
     }
 
-    public static function unhealthy(string $message): Result
+    /**
+     * @phpstan-param Metadata $metadata
+     */
+    public static function unhealthy(string $message, array $metadata = []): Result
     {
-        return new self(false, $message);
+        return new self(false, $message, $metadata);
     }
 }
