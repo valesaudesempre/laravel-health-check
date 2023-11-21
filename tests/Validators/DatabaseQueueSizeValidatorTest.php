@@ -3,13 +3,14 @@
 namespace ValeSaude\LaravelHealthCheck\Tests\Validators;
 
 use Illuminate\Support\Facades\DB;
-use ValeSaude\LaravelHealthCheck\Config\DatabaseQueueSizeValidatorConfig;
+use PHPUnit\Framework\MockObject\MockObject;
+use ValeSaude\LaravelHealthCheck\Config\DatabaseQueueConfig;
 use ValeSaude\LaravelHealthCheck\Tests\TestCase;
 use ValeSaude\LaravelHealthCheck\Validators\DatabaseQueueSizeValidator;
 
 class DatabaseQueueSizeValidatorTest extends TestCase
 {
-    /** @var DatabaseQueueSizeValidatorConfig */
+    /** @var DatabaseQueueConfig&MockObject */
     private $configMock;
     /** @var DatabaseQueueSizeValidator */
     private $sut;
@@ -18,7 +19,7 @@ class DatabaseQueueSizeValidatorTest extends TestCase
     {
         parent::setUp();
 
-        $this->configMock = $this->createMock(DatabaseQueueSizeValidatorConfig::class);
+        $this->configMock = $this->createMock(DatabaseQueueConfig::class);
         $this->sut = new DatabaseQueueSizeValidator($this->configMock);
 
         $this->setupQueueTables();

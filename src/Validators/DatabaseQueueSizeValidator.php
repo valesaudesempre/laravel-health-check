@@ -5,16 +5,16 @@ namespace ValeSaude\LaravelHealthCheck\Validators;
 use Illuminate\Database\ConnectionInterface;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
-use ValeSaude\LaravelHealthCheck\Config\DatabaseQueueSizeValidatorConfig;
+use ValeSaude\LaravelHealthCheck\Config\DatabaseQueueConfig;
 use ValeSaude\LaravelHealthCheck\Contracts\ValidatorInterface;
 use ValeSaude\LaravelHealthCheck\Result;
 
 class DatabaseQueueSizeValidator implements ValidatorInterface
 {
-    /** @var DatabaseQueueSizeValidatorConfig */
+    /** @var DatabaseQueueConfig */
     private $config;
 
-    public function __construct(DatabaseQueueSizeValidatorConfig $config)
+    public function __construct(DatabaseQueueConfig $config)
     {
         $this->config = $config;
     }
